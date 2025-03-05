@@ -10,4 +10,15 @@ export default css`
   .centered-div {
     margin: ${CAP_SPACE_72};
   }
+  .rewards-catalog-settings-container {
+    .cap-content-wrapper {
+      overflow: unset !important;
+      .cap-component-wrapper > div:first-of-type {
+        overflow: unset !important;
+      }
+      .cap-sidebar-v2 {
+        min-width: 17.143rem;
+      }
+    }
+  }
 `;

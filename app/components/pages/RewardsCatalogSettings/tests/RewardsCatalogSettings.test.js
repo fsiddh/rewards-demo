@@ -2,9 +2,15 @@ import '@testing-library/jest-dom';
 import { render, screen, cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
+import { configureStore } from '@capillarytech/vulcan-react-sdk/utils';
+import { IntlProvider } from 'react-intl';
 
+import initialState from '../../../../initialState';
 import { actionTypes } from '../../Cap/constants';
 import { RewardsCatalogSettings, mapDispatchToProps } from '../RewardsCatalogSettings';
+import loginReducer from '../../Login/reducer';
 
 jest.setTimeout(20000);
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -37,7 +43,19 @@ describe('<RewardsCatalogSettings />', () => {
   };
 
   const renderWithRouter = (component) => {
-    return render(<BrowserRouter>{component}</BrowserRouter>);
+    let history = createMemoryHistory();
+    let initialReducer = {
+      [`${CURRENT_APP_NAME}-login-reducer`]: loginReducer,
+    };
+    const store = configureStore(initialState, initialReducer, history);
+
+    return render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <IntlProvider>{component}</IntlProvider>
+        </BrowserRouter>
+      </Provider>,
+    );
   };
 
   let originalLocation;
@@ -94,7 +112,7 @@ describe('<RewardsCatalogSettings />', () => {
     renderWithRouter(<RewardsCatalogSettings {...mockPropsWithCategories} />);
     await waitFor(
       () => {
-        expect(screen.getByText('Categories')).toBeInTheDocument();
+        expect(screen.getAllByText('Custom fields')[0]).toBeInTheDocument();
       },
       { timeout: 10000 },
     );

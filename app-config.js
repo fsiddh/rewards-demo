@@ -20,7 +20,7 @@ module.exports = {
     useI18n: true,
     customI18n: false,
     localI18n: false,
-    appNames: ['loyalty_plus', 'coupons_v2'],
+    appNames: [], //@TODO Add i18n for rewards once locize bucket is created
     locales: [],
     defaultLocale: null,
   },

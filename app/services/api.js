@@ -9,7 +9,9 @@ import { loginPageUrl } from '../config/path';
 
 import * as requestConstructor from './requestConstructor';
 
-const { getAryaAPICallObject } = requestConstructor;
+const { getAryaAPICallObject, getAPICallObject } = requestConstructor;
+
+import translations from '../translations/en.json';
 
 export const checkIncentivesRewardsApiSuccess = (apiResponse = {}) => {
   return apiResponse?.status === 200 && apiResponse?.success;
@@ -44,8 +46,8 @@ const prepareVulcanSuccessResponseStructure = (result) => ({
   success: true,
   status: 200,
 });
-//avoid this for all incentives api calls
 
+//avoid this for all incentives api calls
 const httpRequest = apiCaller.initializeApiCaller({
   redirectIfUnauthenticated,
   sendVulcanMetricHeaders: true, // config to capture metrics for all calls made, always send this as true
@@ -90,6 +92,7 @@ function fetchWithTimeout(ms, promise) {
     promise.then(resolve, reject);
   });
 }
+
 function showError(error, status) {
   const capNotificationSeverityType =
     status / 100 === 4 ? CapNotification.info : CapNotification.error;
@@ -101,18 +104,21 @@ function showError(error, status) {
     if (error?.result?.errorMessage?.errors?.[0]?.message)
       message = error.result.errorMessage.errors[0].message;
   }
+
   message = message || 'An error occurred with the API';
 
   capNotificationSeverityType({
     message,
   });
 }
+
 function checkStatusCode(res) {
   if (res && res.code) {
     return /^[4-5][0-9][0-9]$/.test(res.code);
   }
   return false;
 }
+
 //use this for all incentives api calls
 function request(url, options, timeout = 50000) {
   const fetchUrl =
@@ -161,7 +167,7 @@ export const getLocizeMessage = async (locale) => {
     }),
     {},
   );
-  return prepareVulcanSuccessResponseStructure(result);
+  return prepareVulcanSuccessResponseStructure(translations);
 };
 
 export const appendQueryParams = (baseUrl = '', params = {}) => {
@@ -207,7 +213,17 @@ export const getUserData = async () => {
   return prepareVulcanSuccessResponseStructure(result);
 };
 
-export const getAllVendors = async (brandId) => {
-  const url = `${endpoints.incentives_rewards_endpoint}/vendors/list/brand/${brandId}`;
-  return request(url, getAryaAPICallObject('GET'));
+export const getAllCustomFields = async () => {
+  const url = `${endpoints.incentives_rewards_endpoint}/settings/custom-fields`;
+  return request(url, getAPICallObject('GET'));
+};
+
+export const createCustomField = async (payload) => {
+  const url = `${endpoints.incentives_rewards_endpoint}/settings/custom-fields`;
+  return request(url, getAPICallObject('POST', payload));
+};
+
+export const updateCustomField = async (customFieldId, payload) => {
+  const url = `${endpoints.incentives_rewards_endpoint}/settings/custom-fields/${customFieldId}`;
+  return request(url, getAPICallObject('PUT', payload));
 };

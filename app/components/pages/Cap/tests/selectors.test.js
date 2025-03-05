@@ -16,6 +16,6 @@ describe('makeSelectOrganizationTimezone', () => {
       },
     });
     const selected = makeSelectOrganizationTimezone().resultFunc(state);
-    expect(selected).toEqual({ timezone: 'America/New_York' });
+    expect(selected).toEqual('America/New_York');
   });
 });
