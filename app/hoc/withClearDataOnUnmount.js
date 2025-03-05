@@ -5,7 +5,7 @@ const withClearDataOnUnmount = (Component) => {
   const WithClearDataOnUnmount = (props) => {
     useEffect(() => {
       return () => {
-        props.actions?.clearData();
+        props.actions?.clearData?.() || props.actions?.clearAllData?.();
       };
     }, []);
 
@@ -17,6 +17,7 @@ const withClearDataOnUnmount = (Component) => {
   WithClearDataOnUnmount.propTypes = {
     actions: PropTypes.shape({
       clearData: PropTypes.func,
+      clearAllData: PropTypes.func,
     }),
   };
 

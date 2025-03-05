@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import moment from 'moment-timezone';
 
 import {
   prefix as prefixPath,
@@ -43,6 +44,7 @@ const {
   makeSelectSidebarMenuData,
   makeSelectTopbarMenuData,
   makeSelectIsoLangToLocizeLangMapping,
+  makeSelectOrganizationTimezone,
 } = selectors;
 const {
   HELP_URL,
@@ -67,6 +69,7 @@ export const Cap = ({
   userData,
   orgData,
   isoLangToLocizeLangMapping,
+  organizationTimezone,
   intl: { formatMessage },
 }) => {
   const { pathname } = location;
@@ -80,6 +83,17 @@ export const Cap = ({
 
   const [selectedOrgId, setSelectedOrgId] = useState(null);
   const { locale, changeLocale } = useTranslations();
+
+  // Initialize moment timezone across the app
+  useEffect(() => {
+    if (organizationTimezone?.label) {
+      console.log('organizationTimezone', organizationTimezone);
+      moment.tz.setDefault(organizationTimezone.label);
+    } else {
+      // If no timezone is available, set the default fallback timezone to UTC
+      moment.tz.setDefault('UTC');
+    }
+  }, [organizationTimezone]);
 
   useEffect(() => {
     const getUserGtmData = (userData, currentOrgDetails) => {
@@ -226,6 +240,10 @@ Cap.propTypes = {
   actions: PropTypes.object.isRequired,
   loginActions: PropTypes.object,
   isoLangToLocizeLangMapping: PropTypes.object,
+  organizationTimezone: PropTypes.shape({
+    label: PropTypes.string,
+    offset: PropTypes.string
+  }),
   intl: intlShape.isRequired,
 };
 
@@ -238,6 +256,10 @@ Cap.defaultProps = {
   sidebarMenuData: [],
   loginActions: {},
   isoLangToLocizeLangMapping: {},
+  organizationTimezone: {
+    label: '',
+    offset: ''
+  },
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -246,6 +268,7 @@ const mapStateToProps = createStructuredSelector({
   sidebarMenuData: makeSelectSidebarMenuData(),
   topbarMenuData: makeSelectTopbarMenuData(),
   isoLangToLocizeLangMapping: makeSelectIsoLangToLocizeLangMapping(),
+  organizationTimezone: makeSelectOrganizationTimezone(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -77,9 +77,7 @@ const makeSelectIsoLangToLocizeLangMapping = () =>
   const makeSelectOrganizationTimezone = () =>
     createSelector(selectCapDomain, (subState = fromJS({})) => {
       const organizationMetadata = subState.get('organizationMetadata')?.toJS(); 
-      return {
-        timezone: organizationMetadata?.data?.timezones?.base_timezone,
-      }
+      return organizationMetadata?.data?.timezones?.base_timezone;
     });
 
 export {
