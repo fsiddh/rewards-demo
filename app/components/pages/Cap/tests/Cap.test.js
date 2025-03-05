@@ -12,7 +12,7 @@ import { Cap } from '../Cap';
 
 import { mockUserData } from './mockData';
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 

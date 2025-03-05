@@ -404,8 +404,8 @@ export const mockOrganizationData = {
       },
       timezones: {
         base_timezone: {
-          label: 'Asia/Kolkata',
-          offset: '+05:30',
+          label: 'America/New_York',
+          offset: '-04:00',
         },
         supported_timezones: {
           timezone: [

@@ -1,4 +1,4 @@
-import CustomFieldSettings from '../../organisms/CustomFieldSettings';
+import CustomFieldsListing from '../CustomFieldsSettings';
 
 export const DEFAULT_CATEGORIES_SETTINGS_PATH = '/settings/categories';
 export const DEFAULT_SETTINGS_PATH = '/rewards-catalog/ui/settings';
@@ -7,55 +7,55 @@ export const routeParamList = [
   {
     key: 'categories',
     path: 'categories',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Categories',
   },
   {
     key: 'currencyPartners',
     path: 'currency-partners',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Currency Partners',
   },
   {
     key: 'customFields',
     path: 'custom-fields',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Custom Fields',
   },
   {
     key: 'eventNotification',
     path: 'event-notification',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Event Notification',
   },
   {
     key: 'fulfillmentStatus',
     path: 'fulfillment-status',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Fulfillment Status',
   },
   {
     key: 'geography',
     path: 'geography',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Geography',
   },
   {
     key: 'groups',
     path: 'groups',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Groups',
   },
   {
     key: 'languages',
     path: 'languages',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Languages',
   },
   {
     key: 'redemptionLimit',
     path: 'redemption-limit',
-    component: CustomFieldSettings,
+    component: CustomFieldsListing,
     heading: 'Redemption Limit',
   },
 ];

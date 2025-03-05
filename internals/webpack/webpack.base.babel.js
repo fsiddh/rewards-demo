@@ -295,6 +295,8 @@ module.exports = (options) => ({
       '@bugsnag/js': path.resolve('node_modules/@bugsnag/js'),
       '@bugsnag/plugin-react': path.resolve('node_modules/@bugsnag/plugin-react'),
       lodash: path.resolve('node_modules/lodash'),
+      'utils': path.resolve('app/utils'),
+      'hoc': path.resolve('app/hoc'),
     },
     fallback: {
       fs: false,
