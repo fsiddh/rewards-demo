@@ -1,3 +1,1 @@
-> **⚠️ Important TODO:**  
-Add guide-lines in this files!
-> 
+# rewards-demo
